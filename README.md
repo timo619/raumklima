@@ -2,6 +2,7 @@
 # Access room climate station dnt RoomLogg Pro in linux (Raspberry Pi)
 
 The climate station is also distributed as Raumklimastation RS500 from ELV or HP3000 from Ambient Weather, Manufacturer in China: Fine Offset
+
 The software was written by (https://github.com/juergen-rocks/raumklima/issues/40).
 
 ![Picture of climate station](https://github.com/timo619/raumklima/blob/master/doc/img/climate-station.jpg)
@@ -64,8 +65,9 @@ virtualenv::
 
 - `pip install -r requirements-rs500reader.txt`
 
-------
-Add:
+### things to install
+
+- add udev rule so that usb device is recognized:
 `nano /etc/udev/rules.d/50-hid.rules`
 
 ```
@@ -73,28 +75,28 @@ Add:
 SUBSYSTEM=="usb", ATTR{idVendor}=="0483", ATTR{idProduct}=="5750", MODE="0666"
 ```
 
-restart udev --> 
+- restart udev --> 
 `sudo udevadm trigger`
-------
-Add to crontab-file (via crontab -e):
+
+- Add to crontab-file (via crontab -e):
 ```
 @reboot python raumklima/src/publish_mqtt_raumklima.py -discover> /dev/null 2>&1;
 * *  *   *   *     python raumklima/src/publish_mqtt_raumklima.py > /dev/null 2>&1;
 0,30 *  *   *   *     python raumklima/src/publish_mqtt_raumklima.py -discover> /dev/null 2>&1;
 ```
--------
-Install Docker:
+
+- Install Docker:
 `sudo apt-get install docker.io docker-compose`
--------
-Install Home Assistant:
+
+- Install Home Assistant:
 `sudo docker run -d   --name homeassistant   --privileged   --restart=unless-stopped   -e TZ=Europe/Berlin   -v /home/pi/homeassistant:/config   --network=host   ghcr.io/home-assistant/home-assistant:stable`
--------
-Install Telegraf-InfluxDB-Grafana alltogether:
+
+- Install Telegraf-InfluxDB-Grafana alltogether:
 `git clone https://github.com/alekece/tig-stack`
 `cd tig-stack`
 `sudo docker-compose up -d`
--------
-Create influxDB Database with the name homeassistant
+
+- Create influxDB Database with the name homeassistant
 `sudo docker exec -it influxdb /bin/bash`
 `influx`
 `CREATE DATABASE homeassistant`
