@@ -4,7 +4,7 @@
 The climate station is also distributed as Raumklimastation RS500 from ELV or HP3000 from Ambient Weather, Manufacturer in China: Fine Offset
 The software was written by (https://github.com/juergen-rocks/raumklima/issues/40).
 
-![Picture of climate station](https://github.com/timo619/raumklima/master/doc/img/climate-station.jpg)
+![Picture of climate station](https://github.com/timo619/raumklima/blob/master/doc/img/climate-station.jpg)
 
 ## More information in german:
 
